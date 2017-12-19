@@ -17,7 +17,7 @@ public class TestNGCase {
         TestListenerAdapter tla = new TestListenerAdapter();
         List<String> testFilesList = new ArrayList<String>();
         TestNG testng=new TestNG();
-        testFilesList.add("testCoach.xml");
+        testFilesList.add(FilePath.TESTNG_FILE_NAME);
         testng.setTestSuites(testFilesList);
         testng.setUseDefaultListeners(false);
         testng.addListener(tla);

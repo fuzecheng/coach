@@ -69,14 +69,38 @@ public class TestCoachCase extends BaseTestCase {
         if (toastIsExist(5,toast)){
             AppiumListener.erro_list.add("Chat Server Erro");
         }
-        if( !AppiumListener.erro_list.isEmpty()){
-            String erro=AppiumListener.erro_list.toString();
-            AppiumListener.erro_list.clear();
-            assertFalse(true,erro);
-
-        }
+        erroCall();
     }
-    @AfterTest
+    @Test
+    public void testClassBegin() throws InterruptedException {
+        driver.findElement(By.id("cc.coach.bodyplus:id/view_tab1")).click();
+        driver.findElement(By.id("cc.coach.bodyplus:id/view_choose1")).click();
+        driver.findElement(By.id("cc.coach.bodyplus:id/tv_name")).click();
+        if (!isElementExist("new UiSelector().text(\"13728963515\")")){
+            AppiumListener.erro_list.add("add student erro");
+        }
+        driver.findByUiautomator_text("选择Core").click();
+        waitElement(7,0,"则成").click();
+        driver.findElement(By.id("cc.coach.bodyplus:id/tv_bond")).click();
+        if (!toastIsExist(6,"绑定成功")){
+            AppiumListener.erro_list.add("Bind Core erro");
+        }
+        if(isElementExist("new UiSelector().text(\"连接已断开\")")){
+            AppiumListener.erro_list.add("Bind Core erro,Connection erro");
+        }
+        driver.findElement(By.id("cc.coach.bodyplus:id/tv_start_course")).click();
+        Thread.sleep(40000);
+
+        if (isElementExist("new UiSelector().text(\"- -\")")){
+            AppiumListener.erro_list.add("No data");
+        }
+        driver.findElement(By.id("cc.coach.bodyplus:id/tv_finish")).click();
+        driver.findElement(By.id("cc.coach.bodyplus:id/confirm")).click();
+        waitElement(5,1,"cc.coach.bodyplus:id/base_title_left_imageButton").click();
+        erroCall();
+
+
+    }    @AfterTest
     public void tearDown() throws IOException, MessagingException {
         helper.stop();
         driver.removeApp("cc.coach.bodyplus");
